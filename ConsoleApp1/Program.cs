@@ -24,14 +24,14 @@ public class Game
     public int ManticoreHealth
     {
         get { return manticoreHealth; }
-        set { if (value > 0) manticoreHealth = value; }
+        set { if (value >= 0) manticoreHealth = value; }
     
     }
 
     public int CityHealth 
     {
         get { return cityHealth; }
-        set { if (value > 0) cityHealth = value; }
+        set { if (value >= 0) cityHealth = value; }
     }
     public int NextTurn()
     {
@@ -57,7 +57,7 @@ public class Game
 
             }           
     }
-// the game does not end when Manticore health is 0 (stops at 1)
+
     public void DisplayHealthStatus() 
     {
         Console.WriteLine($"Manticore health level is {manticoreHealth}."); 
@@ -81,6 +81,7 @@ public class Game
 public class Manticore
 {
    private int ManticoreUnits;
+   private int numberOfDirectHits;
 
   public Manticore ()
   {
@@ -140,6 +141,18 @@ public class Manticore
         return game.ManticoreHealth;
         
    }
+
+   public int DirectHitCounter(Game game, bool isAsimpleHit)
+{
+    if (isAsimpleHit)
+    {
+        numberOfDirectHits++;
+        return numberOfDirectHits; 
+    }
+
+}
+
+    
 }
 
 public class Consolas
@@ -194,6 +207,7 @@ public class Consolas
     {
 
         bool isAsimpleHit; 
+    
 
         if (playerDistance < ManticorePosition)
         {
@@ -214,8 +228,8 @@ public class Consolas
         return isAsimpleHit;
         
     }
-        // so, what happens after all of that? the turn is ending, right? we either had a hit or not. 
-        // every turn takes out -1 health from Consolas health as Manticore is kind of attacking as well. 
+    // every 3rd direct shot, should be decreasing the health of the Manticore by 2 points
+    // every 5th direct shot, should be decreasing the health of the Manticore by 3 points
 
 
     public int ConsolasHealthReduction (Game game, bool isAsimpleHit) 
