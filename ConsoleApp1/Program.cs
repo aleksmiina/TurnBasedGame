@@ -43,7 +43,6 @@ public class Game
     public void GameRunning()
     {
         
-
             while(manticoreHealth > 0 && cityHealth > 0)
             {       
             NextTurn();
@@ -52,12 +51,16 @@ public class Game
             
             bool wasHit = player2.CannonShot(player1.ManticorePosition); 
 
+            player1.DirectHitCounter(this, wasHit);
+            player1.PowerfulHit(this, player1.DirectHitCounter(this, wasHit));
+
             player1.ManticoreHealthLevel(this, wasHit);
             player2.ConsolasHealthReduction(this, wasHit);
 
             }           
     }
-
+    // looks like that because of 'this' the code is being called twice somewhere resulting in an incorrect 
+    // decrease of Manticores health.
     public void DisplayHealthStatus() 
     {
         Console.WriteLine($"Manticore health level is {manticoreHealth}."); 
@@ -142,16 +145,29 @@ public class Manticore
         
    }
 
-   public int DirectHitCounter(Game game, bool isAsimpleHit)
+   public int DirectHitCounter(Game game, bool isAsimpleHit) 
 {
     if (isAsimpleHit)
     {
         numberOfDirectHits++;
         return numberOfDirectHits; 
     }
+    return numberOfDirectHits;
 
 }
 
+    public int PowerfulHit(Game game, int numberOfDirectHits)
+    {
+        if (numberOfDirectHits % 3 == 0)
+        {
+            game.ManticoreHealth -= 2;
+        }
+        else if (numberOfDirectHits % 5 == 0)
+        {
+            game.ManticoreHealth -= 3;
+        }
+        return game.ManticoreHealth;
+    }
     
 }
 
