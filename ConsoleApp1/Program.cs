@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading;
-
-// cd /Users/aleksolenichev/CSharpPlayersGuide/ConsoleApp1/          
-
+         
 public class Game
 {
     private int turnNumber;
@@ -51,16 +49,16 @@ public class Game
             
             bool wasHit = player2.CannonShot(player1.ManticorePosition); 
 
-            player1.DirectHitCounter(this, wasHit);
-            player1.PowerfulHit(this, player1.DirectHitCounter(this, wasHit));
+            int directHits = player1.DirectHitCounter(this, wasHit);
+            player1.PowerfulHit(this, directHits);
+
 
             player1.ManticoreHealthLevel(this, wasHit);
             player2.ConsolasHealthReduction(this, wasHit);
 
             }           
     }
-    // looks like that because of 'this' the code is being called twice somewhere resulting in an incorrect 
-    // decrease of Manticores health.
+    //manticore health is decreasing by 2 points even if there was no direct hit. 
     public void DisplayHealthStatus() 
     {
         Console.WriteLine($"Manticore health level is {manticoreHealth}."); 
@@ -150,7 +148,6 @@ public class Manticore
     if (isAsimpleHit)
     {
         numberOfDirectHits++;
-        return numberOfDirectHits; 
     }
     return numberOfDirectHits;
 
