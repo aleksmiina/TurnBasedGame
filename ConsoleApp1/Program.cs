@@ -45,24 +45,29 @@ public class Game
             {       
             NextTurn();
             DisplayHealthStatus(); 
+            
             player1.SetManticorePosition();
             
             bool wasHit = player2.CannonShot(player1.ManticorePosition); 
+            UpdatedHealthLevels(wasHit);
 
             int directHits = player1.DirectHitCounter(this, wasHit);
             player1.PowerfulHit(this, directHits);
 
-
-            player1.ManticoreHealthLevel(this, wasHit);
-            player2.ConsolasHealthReduction(this, wasHit);
-
             }           
     }
-    //manticore health is decreasing by 2 points even if there was no direct hit. 
+      //manticore health is decreasing by 2 points even if there was no direct hit. Currently, if there is a hit, it reduces by 1 point! 
     public void DisplayHealthStatus() 
     {
         Console.WriteLine($"Manticore health level is {manticoreHealth}."); 
         Console.WriteLine($"Consolas health level is {cityHealth}.");  
+    }
+
+    public void UpdatedHealthLevels(bool wasHit)
+    {
+        
+        player1.ManticoreHealthLevel(this, wasHit);
+        player2.ConsolasHealthReduction(this, wasHit);
     }
 
     public void GameOver()
@@ -127,7 +132,7 @@ public class Manticore
         Console.WriteLine($"Very well, the chosen distance is {ManticoreUnits}.");
         
     
-        //Thread.Sleep(2000); commenting out for the testing purposes 
+        //Thread.Sleep(2000); //commenting out for the testing purposes 
         //Console.Clear();
    } 
 
