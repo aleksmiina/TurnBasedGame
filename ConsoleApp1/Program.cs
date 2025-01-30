@@ -52,11 +52,14 @@ public class Game
             UpdatedHealthLevels(wasHit);
 
             int directHits = player1.DirectHitCounter(this, wasHit);
-            player1.PowerfulHit(this, directHits);
+            player1.PowerfulHit(this, directHits, wasHit);
+
+            Thread.Sleep(3000);  
+            Console.Clear();
 
             }           
     }
-      //manticore health is decreasing by 2 points even if there was no direct hit. Currently, if there is a hit, it reduces by 1 point! 
+    
     public void DisplayHealthStatus() 
     {
         Console.WriteLine($"Manticore health level is {manticoreHealth}."); 
@@ -132,8 +135,8 @@ public class Manticore
         Console.WriteLine($"Very well, the chosen distance is {ManticoreUnits}.");
         
     
-        //Thread.Sleep(2000); //commenting out for the testing purposes 
-        //Console.Clear();
+        Thread.Sleep(1000);  
+        Console.Clear();
    } 
 
 
@@ -158,13 +161,13 @@ public class Manticore
 
 }
 
-    public int PowerfulHit(Game game, int numberOfDirectHits)
+    public int PowerfulHit(Game game, int numberOfDirectHits, bool isAsimpleHit)
     {
-        if (numberOfDirectHits % 3 == 0)
+        if (isAsimpleHit && numberOfDirectHits % 3 == 0)
         {
             game.ManticoreHealth -= 2;
         }
-        else if (numberOfDirectHits % 5 == 0)
+        if (isAsimpleHit && numberOfDirectHits % 5 == 0) 
         {
             game.ManticoreHealth -= 3;
         }
@@ -243,13 +246,11 @@ public class Consolas
             isAsimpleHit = true;
         
         }
+    
         return isAsimpleHit;
         
     }
-    // every 3rd direct shot, should be decreasing the health of the Manticore by 2 points
-    // every 5th direct shot, should be decreasing the health of the Manticore by 3 points
-
-
+   
     public int ConsolasHealthReduction (Game game, bool isAsimpleHit) 
 
     {
@@ -264,7 +265,7 @@ public class Consolas
             Console.WriteLine("The health level of Consolas is reduced by 1 point!");
             return game.CityHealth;
         }
-
+   
     return game.CityHealth;
 
     }
