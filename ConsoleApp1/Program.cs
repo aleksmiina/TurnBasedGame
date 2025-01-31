@@ -165,11 +165,11 @@ public class Manticore
     {
         if (isAsimpleHit && numberOfDirectHits % 3 == 0)
         {
-            game.ManticoreHealth -= 2;
+            game.ManticoreHealth -= 1; // it takes -2 from health as is isAsimpleHit adds 1 + this line adds 1 as well
         }
         if (isAsimpleHit && numberOfDirectHits % 5 == 0) 
         {
-            game.ManticoreHealth -= 3;
+            game.ManticoreHealth -= 2;
         }
         return game.ManticoreHealth;
     }
@@ -242,7 +242,7 @@ public class Consolas
         }
         else 
         {
-            Console.WriteLine("We have a direct hit here!. The health of the Manticore is reduced by 1 point!");
+            Console.WriteLine($"We have a direct hit here!. The health of the Manticore is reduced by 1 point!");
             isAsimpleHit = true;
         
         }
